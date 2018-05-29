@@ -1,32 +1,5 @@
 var socket = io();
 
-//send
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//recevie
-
-
-
-
 var SELECT_DATA ="";
 socket.on('selecter', function(data) {
     SELECT_DATA = data.selectdata;
