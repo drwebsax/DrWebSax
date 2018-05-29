@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+            <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="cont/js/platform.js"></script>
+            <link rel="import" href="cont/webcomponents/polymer.html">
+            <link rel="import" href="cont/webcomponents/controls.html">
+            <link rel="stylesheet" type="text/css" href="./src/css/websax.css">
+            <style>
+                html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+            </style>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+            <title>Dr.WebSax</title>
+        </head>
+
+
+        <body class="w3-light-grey">
+
+
+            <!--#### Top container ##########################################-->
+
+            <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+                <button class="w3-bar-item w3-button  w3-hover-none w3-hover-text-light-grey" onclick="set_open();"><i class="fa fa-bars"></i> Set</button>
+
+            	<span class="w3-bar-item w3-center"><i class="fa fa-dashboard"></i> Dr.Webcont</span>
+                <button class="w3-bar-item w3-button w3-hover-none w3-hover-text-light-grey w3-right" onclick="effect_open();">Effect <i class="fa fa-bars"></i> </button>
+            </div>
+
+            <!--### Set menu ############################################-->
+            <nav class="w3-sidebar w3-white w3-animate-left" style="display:none;z-index:3;width:280px;" id="setSidebar">
+                <div class="w3-bar-block">
+                  <a href="#" class="w3-medium w3-bar-item w3-button w3-hover-black" onclick="set_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+
+                  <P class="w3-bar-item  w3-black margin-5px">
+                      <input class="w3-check" id="file-check" type="checkbox" >
+                      <label >Audio player</label>
+                  </P>
+                  <P class="w3-bar-item  w3-dark-grey margin-5px">
+                      <input class="w3-check" id="tunner-check" type="checkbox" >
+                      <label  >Tunner</label>
+                  </P>
+                  <P class="w3-bar-item  w3-black margin-5px">
+                      <input class="w3-check" id="record-check" type="checkbox" >
+                      <label  >Record</label>
+                  </P>
+                </div>
+            </nav>
+
+            <!--### effect menu ############################################-->
+            <nav class="w3-sidebar   w3-white w3-animate-left" style="display:none;z-index:3;width:280px;" id="effectSidebar">
+                <div class="w3-bar-block">
+                    <a href="#" class=" w3-medium w3-bar-item w3-button w3-grey w3-hover-black" onclick="effect_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+                    <P class="w3-bar-item  w3-black margin-5px">
+                        <input class="w3-check" id="eq-check" type="checkbox" >
+                        <label >5 band Equalizer</label>
+                    </P>
+                    <P class="w3-bar-item  w3-dark-grey margin-5px">
+                        <input class="w3-check" id="comp-check" type="checkbox" >
+                        <label >compressor</label>
+                    </P>
+                    <P class="w3-bar-item  w3-black margin-5px">
+                        <input class="w3-check" id="pitch-check" type="checkbox" >
+                        <label >Pitch Modulator</label>
+                    </P>
+                    <P class="w3-bar-item  w3-dark-grey margin-5px">
+                        <input class="w3-check" id="time-check" type="checkbox" >
+                        <label  >Time Modulator</label>
+                    </P>
+                    <P class="w3-bar-item  w3-black margin-5px">
+                        <input class="w3-check" id="delay-check" type="checkbox" >
+                        <label  >Delay/Reverb</label>
+                    </P>
+                    <P class="w3-bar-item  w3-dark-grey margin-5px">
+                        <input class="w3-check" id="pan-check" type="checkbox" >
+                        <label  >Panning</label>
+                    </P>
+                </div>
+            </nav>
+
+            <!-- Overlay effect when opening sidebar on small screens -->
+            <div class="w3-overlay  w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+            <!--############ Start main components ##########################-->
+
+            <!--##### APP components ##################-->
+            <div class="w3-main" style="margin-top:43px;">
+                <div class="w3-row-padding w3-margin-bottom">
+
+                    <!--################# micInput ################################### -->
+                    <div class="fix-size ">
+                        <div class="w3-container w3-black w3-padding-8 imag-2 ">
+                            <div class="w3-left mar-left " id="mic_opacity" >
+                                 <webaudio-switch id="saxmic_on" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+
+                            <h4  class="w3-left" style="display:inline-block;margin:15px 0px 15px 0px;" >Mic</h4>
+                            <div class="w3-left w3-panel ">
+                               <canvas id="saxcanvas" style="position:relative;width:20px;height:15px;"></canvas>
+                            </div>
+                            <span class="w3-left w3-lime" style="padding:1px 10px;margin:10px 8px;border:5px solid gray;">
+                                <strong >vol : </strong><i id="mic-volume"> 20 </i> <strong> %</strong>
+                            </span>
+                            <!-- <button onclick="document.getElementById('mic_modal').style.display='block'" style="margin:10px 0px 0px 7px;"  class="w3-left w3-button  "><i class="fa fa-cog fa-fw font-20"></i></button> -->
+                            <!-- <span> <webaudio-switch class=" control_set" id="switch1" src="./cont/img/switch_toggle.png" value="0" max="1" width="70" height="70"></webaudio-switch></span> -->
+
+                        </div>
+                    </div>
+                    <!--###### Mic layer #######-->
+                    <div id="mic_modal" class="w3-modal">
+
+                        <!-- <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                            <header class="w3-container w3-black">
+                              <span onclick="document.getElementById('mic_modal').style.display='none'"
+                              class="w3-button w3-large w3-display-topright">&times;</span>
+                              <h2>Mic Control</h2>
+                            </header>
+                            <div class="slidecontainer">
+                               <input type="range" min="0" max="0.9" value="0.2" step="0.01" class="slider" id="saxmic_gain">
+                               <p class ="padd-left_8">Value: <span id="mic-volume_2">20</span> <strong>%</strong></p>
+                            </div>
+                            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                                <button onclick="document.getElementById('mic_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                            </div>
+
+                        </div> -->
+                    </div>
+                    <!--################# main contens ################################### -->
+                    <div class="w3-panel w3-black bg">
+                        <h2 class="bgText">Mic Control</h2>
+                        <div class="slidecontainer pos">
+                           <input type="range" min="0" max="0.9" value="0.2" step="0.01" class="slider" id="saxmic_gain">
+                           <span class ="padd-left_8"><span id="mic-volume_2">20</span> <strong>%</strong>
+                           </span>
+
+                            <span class="dial_set">
+                                <!-- <webaudio-knob id="saxmic_gain1" src="cont/img/bluedial.png"  value="0.5" max="0.95" step="0.01" diameter="150" sprites="30" ></webaudio-knob> -->
+                                <webaudio-knob class=" control_set" id="saxmic_gain1" src="./cont/img/LittlePhatty_sample.png" value="0.8" max="0.95" step="0.01" diameter="110" sprites="4"></webaudio-knob>
+                            <span>
+                            </span>
+                        </div>
+                        <div class="switch">
+                            <ul>
+                                <li id="-check_eq">
+                                    <webaudio-switch class=" control_set" id="file-check-1"  src="./cont/img/switch_toggle.png" value="0" max="1" width="70" height="70"></webaudio-switch>
+                                    <span style="color:white;top:50px;">Audio player</span>
+                                </li>
+                                <li id="-check_comp">
+                                    <webaudio-switch class=" control_set" id="tunner-check-1" src="./cont/img/switch_toggle.png" value="0" max="1" width="70" height="70"></webaudio-switch>
+                                    <span style="color:white;top:50px;left:155px;">Tunner</span>
+                                </li>
+                                <li id="-check_delay">
+                                    <webaudio-switch class=" control_set" id="record-check-1" src="./cont/img/switch_toggle.png" value="0" max="1" width="70" height="70"></webaudio-switch>
+                                    <span style="color:white;top:50px;left:240px;">Record</span>
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                    <!--############### File player ##################################-->
+                    <div class="fix-size" id="check_file">
+                            <div class="w3-container w3-black imag-4 ">
+                            <div class="w3-left " id="file_onoff" >
+                                <webaudio-switch id="file_on" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+                            <div class="w3-left" style ="width : 180px;">
+                                <!-- Audio File Player -->
+                                <div class="w3-left">
+                                    <audio class="file-player"id="sound11" controls></audio>
+                                </div>
+                            </div>
+                            <button onclick="document.getElementById('file_modal').style.display='block'" style="margin:10px 10px;"  class="w3-right w3-button w3-black "><i class="fa fa-cog fa-fw"></i></button>
+                        </div>
+                    </div>
+                    <!--###### file layer #######-->
+                    <div id="file_modal" class="w3-modal">
+
+                        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                            <header class="w3-container w3-black">
+                              <span onclick="document.getElementById('file_modal').style.display='none'"
+                              class="w3-button w3-large w3-display-topright">&times;</span>
+                              <h2>file Control</h2>
+                            </header>
+                            <div class="slidecontainer">
+                                <input type="range" min="0" max="0.7" value="0.01" step="0.01" class="slider" id="file_gain">
+                                <p class ="padd-left_8">vol : <span id="file-volume">10</span> <strong>%</strong></p>
+                                <input type="range" min="0" max="2" value="1" step="0.01" class="slider" id="file_speed">
+                                <p class ="padd-left_8">speed : <span id="speed-volume">0</span> <strong></strong></p>
+                            </div>
+                                <input type="file" id="mF" style ="width : 200px;" >
+                            <br/>
+                            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                                <button onclick="document.getElementById('file_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                                <button onclick="fileFunc.defalut()" type="button" class="w3-button w3-red">default</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!--################### Tunner ####################################-->
+                    <div class="fix-size" id="check_tunner" >
+                        <div class=" w3-container w3-black">
+                            <div class="w3-left " id="file_onoff" >
+                                <webaudio-switch id="file_on" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+                            <div class="w3-left w3-panel w3-black margin-3px">
+                                <span id="note" style="color:white;font-size:25px;"></span>
+                            </div>
+                            <div class="w3-left w3-panel w3-black margin-3px"  style="height:40.8px;">
+                                <span style="color:white;font-size:20px;">:</span>
+                            </div>
+                            <div class="w3-left w3-panel w3-black margin-3px">
+                                <div style="color:white;font-size:25px;"><span id="pitch"></span>Hz</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--####################   EQ mixer  ############################# -->
+                    <div class="fix-size" id="check_eq">
+                        <div class="w3-container w3-black ">
+                            <div class="w3-left ">
+                                <webaudio-switch id="eqbypass" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+                            <div class="w3-left">
+                                <h4>5 Band Equalizer</h4>
+                            </div>
+                            <button class="w3-right w3-button w3-gray " onclick="document.getElementById('eq_modal').style.display='block'" style="margin:10px 10px;"><i class="fa fa-cog fa-fw"></i></button>
+
+                        </div>
+                    </div>
+                    <!--########### EQ mixer layer #########################-->
+                    <div id="eq_modal" class="w3-modal">
+
+                        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                            <header class="w3-container w3-black">
+                                <span onclick="document.getElementById('eq_modal').style.display='none'"
+                                class="w3-button w3-large w3-display-topright">&times;</span>
+                                <h2>EQ Control</h2>
+                            </header>
+                            <div class="slidecontainer">
+                                <input type="range" min="-20" max="20" value="-20" step="0.01" class="slider" id="EQ1">
+                                <p class ="padd-left_8">62.5 Hz : <span id="EQ1_1">20</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" min="-20" max="20" value="0.2" step="0.01" class="slider" id="EQ2">
+                                <p class ="padd-left_8">[ 250 ] :<span id="EQ2_2">20</span> </p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" min="-20" max="20" value="0.2" step="0.01" class="slider" id="EQ3">
+                                <p class ="padd-left_8"> [ 1000 ] : <span id="EQ3_3">20</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" min="-20" max="20" value="0.2" step="0.01" class="slider" id="EQ4">
+                                <p class ="padd-left_8"> [ 4000 ] : <span id="EQ4_4">20</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" min="-20" max="20" value="0.2" step="0.01" class="slider" id="EQ5">
+                                <p class ="padd-left_8">[ 13000 ] :<span id="EQ5_5">20</span></p>
+                            </div>
+                          <!-- <div class="w3-left " >
+                              <webaudio-slider id="EQ1" src="cont/img/s1.png" knobsrc="cont/img/bb44.png" value="-10" min="-20" max="20" step="1" width="30" height="100" basewidth="30" baseheight="110" knobwidth="40" knobheight="40" ditchLength="90" tooltip="Frequency"></webaudio-slider>
+                              <span style="color:white;font-weight:bold;position:relative;left:0px;">[62.5]</span>
+                          </div>
+                          <div class="w3-left" style="margin-left:10px;">
+                              <webaudio-slider id="EQ2" src="cont/img/s1.png" knobsrc="cont/img/bb44.png" value="-10" min="-20" max="20" step="1" width="30" height="100" basewidth="30" baseheight="110" knobwidth="40" knobheight="40" ditchLength="90" tooltip="Frequency"></webaudio-slider>
+                              <span style="color:white;font-weight:bold;position:relative;left:0px;">[250]</span>
+                          </div>
+                          <div class="w3-left" style="margin-left:15px;">
+                              <webaudio-slider id="EQ3"  src="cont/img/s1.png" knobsrc="cont/img/bb44.png" value="-10" min="-20" max="20" step="1" width="30" height="100" basewidth="30" baseheight="110" knobwidth="40" knobheight="40" ditchLength="90" tooltip="Frequency"></webaudio-slider>
+                              <span style="color:white;font-weight:bold;position:relative;left:0px;">[1000]</span>
+                          </div>
+                          <div class="w3-left" style="margin-left:10px;">
+                              <webaudio-slider id="EQ4"  src="cont/img/s1.png" knobsrc="cont/img/bb44.png" value="-10" min="-20" max="20" step="1" width="30" height="100" basewidth="30" baseheight="110" knobwidth="40" knobheight="40" ditchLength="90" tooltip="Frequency"></webaudio-slider>
+                              <span style="color:white;font-weight:bold;position:relative;left:0px;">[4000]</span>
+                          </div>
+                          <div class="w3-left" style="margin-left:10px;">
+                              <webaudio-slider id="EQ5"  src="cont/img/s1.png" knobsrc="cont/img/bb44.png" value="-10" min="-20" max="20" step="1" width="30" height="100" basewidth="30" baseheight="110" knobwidth="40" knobheight="40" ditchLength="90" tooltip="Frequency"></webaudio-slider>
+                              <span style="color:white;font-weight:bold;position:relative;left:0px;">[13000]</span>
+                          </div> -->
+                          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                              <button onclick="document.getElementById('eq_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                              <select class="w3-select w3-border wid-60 "  id ="eq_preset" name="option">
+                                  <option value="" disabled selected> EQ Preset</option>
+                                  <option value="1">normal</option>
+                                  <option value="2">voice</option>
+                                  <option value="3">pop</option>
+                                  <option value="4">dance</option>
+                                  <option value="5">rock</option>
+                                  <option value="6">metal</option>
+                                  <option value="7">classic</option>
+                              </select>
+                          </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <!--############# compressor ######################################-->
+                    <div class="fix-size" id="check_comp">
+                        <div class="w3-container w3-black">
+                            <div class="w3-left ">
+                                <webaudio-switch id="compbypass"  src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                                <!-- blue led on/off-->
+                            </div>
+                          <div class="w3-left">
+                                <h4> Compressor </h4>
+                          </div>
+                          <button class="w3-right w3-button w3-black " onclick="document.getElementById('comp_modal').style.display='block'" style="margin:10px 10px;"  ><i class="fa fa-cog fa-fw"></i></button>
+                        </div>
+                    </div>
+                    <!--########### compressor layer #########################-->
+                    <div id="comp_modal" class="w3-modal">
+
+                        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                            <header class="w3-container w3-black">
+                                <span onclick="document.getElementById('comp_modal').style.display='none'"
+                                class="w3-button w3-large w3-display-topright">&times;</span>
+                                <h2>compressor Control</h2>
+                            </header>
+
+                            <div class="slidecontainer">
+                                <input type="range" value="-70" min="-100" max="0" step="1" class="slider" id="Comp1">
+                                <p class ="padd-left_8">treshold <span id="Comp1_text">0</span></p>
+                            </div>
+
+                        <!--
+                            <div class="w3-left">
+                                <webaudio-knob id="Comp1"  src="cont/img/cehi.png" value="-70" min="-100" max="0" step="1" diameter="90" sprites="49"></webaudio-knob>
+
+                                <span style="color:black;font-weight:bold;position:relative;left:20px;">treshold</span>
+                            </div>
+                            <div class="w3-left">
+                                <webaudio-knob id="Comp4" src="cont/img/cehi.png" value="0" min="0" max="12" step="1" diameter="60" sprites="49"></webaudio-knob>
+
+                                <span style="color:black;font-weight:bold;position:relative;left:20px;">ratio</span>
+
+                            </div>
+                            <div class="w3-left">
+                                <webaudio-knob id="Comp2" src="cont/img/cehi.png" value="-20" min="-40" max="0" step="1" diameter="40" sprites="49"></webaudio-knob>
+
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">reduce</span>
+                                <webaudio-knob id="Comp5" src="cont/img/cehi.png" value="0" min="0" max="1" step="0.01" diameter="40" sprites="49"></webaudio-knob>
+
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">attack</span>
+                            </div>
+                            <div class="w3-left">
+                                <webaudio-knob id="Comp3"  src="cont/img/cehi.png" value="0" max="40" step="1" diameter="40" sprites="49"></webaudio-knob>
+
+                                <span style="color:black;font-weight:bold;position:relative;left:10px;"> knee</span>
+                                <webaudio-knob id="Comp6"  src="cont/img/cehi.png" value="0" min="0" max="1" step="0.01" diameter="40" sprites="49"></webaudio-knob>
+
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">release</span>
+                            </div> -->
+                            <div class="slidecontainer">
+                                <input type="range" value="-20" min="-40" max="0" step="1" class="slider" id="Comp2">
+                                <p class ="padd-left_8"> reduce : <span id="Comp2_text">0</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" value="0" min ="0" max="40" step="1" class="slider" id="Comp3">
+                                <p class ="padd-left_8">knee :<span id="Comp3_text">0</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" value="0" min="1" max="12" step="1" class="slider" id="Comp4">
+                                <p class ="padd-left_8">ratio :<span id="Comp4_text">0</span> </p>
+                            </div>
+
+                            <div class="slidecontainer">
+                                <input type="range" value="0" min="0" max="1" step="0.01" class="slider" id="Comp5">
+                                <p class ="padd-left_8"> attack: <span id="Comp5_text">0</span></p>
+                            </div>
+
+                            <div class="slidecontainer">
+                                <input type="range" value="0" min="0" max="1" step="0.01" class="slider" id="Comp6">
+                                <p class ="padd-left_8">release :<span id="Comp6_text">0</span></p>
+                            </div>
+
+                          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                              <button onclick="document.getElementById('comp_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                              <select class="w3-select w3-border wid-60 "  id ="comp_preset" name="option">
+                                  <option value="" disabled selected>  Preset</option>
+                                  <option value="1">vocal</option>
+                                  <option value="2">brass</option>
+                                  <option value="3">guitar</option>
+                                  <option value="4">drum</option>
+                                  <option value="5">dance</option>
+                              </select>
+                          </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <!--########## Pitch effecter #####################################-->
+                    <div class="fix-size" id="check_pitch">
+                        <div class="w3-container w3-black">
+                            <div class="w3-left ">
+                                <webaudio-switch id="shiftAm"  src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+                            <!-- <div class="w3-left w3-margin-left">
+                                <webaudio-knob id="am2"  src="cont/img/kblack.png" value="0" max="5000" step="1" diameter="70" sprites="9"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">frequency</span>
+
+                            </div>
+                            <div class="w3-left">
+
+                                <webaudio-knob id="am3"  src="cont/img/kblack.png" value="0" max="1" step="0.05" diameter="80" sprites="9"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">modulator 1</span>
+                            </div>
+
+                            <div class="w3-left">
+                                <webaudio-knob id="am4"  src="cont/img/kblack.png" value="0" max="1" step="0.05" diameter="100" sprites="9"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">modulator 2</span>
+                            </div> -->
+                               <div class="w3-left">
+                                   <h4>Pitch Modulater</h4>
+                               </div>
+                               <button class="w3-right w3-button w3-gray " onclick="document.getElementById('Pitch_modal').style.display='block'" style="margin:10px 10px;"  ><i class="fa fa-cog fa-fw"></i></button>
+                           </div>
+                    </div>
+                    <!--########### Pitch Modulater layer #########################-->
+                    <div id="Pitch_modal" class="w3-modal">
+                            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                                <header class="w3-container w3-black">
+                                    <span onclick="document.getElementById('Pitch_modal').style.display='none'"class="w3-button w3-large w3-display-topright">&times;</span>
+                                    <h2>Pitch Modulater</h2>
+                                </header>
+
+                                <div class="slidecontainer">
+                                    <input type="range" value="0" max="5000" step="1" min = "0" class="slider" id="am2">
+                                    <p class ="padd-left_8">Frq : <span id="am2_text">0</span></p>
+                                </div>
+
+
+                                <div class="slidecontainer">
+                                    <input type="range" value="0" max="1" step="0.05" min ="0" class="slider" id="am3">
+                                    <p class ="padd-left_8">Mod 1 :<span id="am3_text">0</span> </p>
+                                </div>
+
+                                <div class="slidecontainer">
+                                  <input type="range" value="0" max="1" step="0.05" min ="0" class="slider" id="am4">
+                                  <p class ="padd-left_8"> Mod 2 : <span id="am4_text">0</span></p>
+                                </div>
+
+                            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                                <button onclick="document.getElementById('Pitch_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                                <select class="w3-select w3-border wid-60 "  id ="pitch_preset" name="option">
+                                    <option value="" disabled selected> Preset</option>
+                                    <option value="1">Preset 1</option>
+                                    <option value="2">Preset 2</option>
+                                    <option value="3">Preset 3</option>
+                                    <option value="4">Preset 4</option>
+                                </select>
+                            </div>
+
+                          </div>
+                      </div>
+
+
+                    <!--####### Time Modulator ########################################-->
+                    <div class="fix-size" id="check_time">
+                        <div class="w3-container w3-black mic_input">
+                            <div class="w3-left">
+                                <webaudio-switch id="shiftbypass" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+                            <!-- <div class="w3-left">
+                                <webaudio-knob id="shift1"  src="cont/img/dde.png" value="0" max="1" step="0.1" diameter="76" sprites="30"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:20px;">delay 1</span>
+                            </div>
+                            <div class="w3-left">
+                                <webaudio-knob id="shift2"  src="cont/img/dde.png" value="0" max="2" step="0.1" diameter="60" sprites="30"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">delay 2</span>
+                            </div>
+                            <div class="w3-left">
+                                <webaudio-knob id="shift3"  src="cont/img/dde.png" value="0" max="3" step="0.1" diameter="60" sprites="30"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:0px;">delay 3</span>
+                            </div>
+                            <div class="w3-left">
+                                <webaudio-knob id="shift4"  src="cont/img/dde.png" value="0" max="4" step="0.1" diameter="97" sprites="30"></webaudio-knob>
+                                <span style="color:black;font-weight:bold;position:relative;left:20px;">delay 4</span>
+                            </div> -->
+                            <div class="w3-left">
+                               <h4>Time Modulator</h4>
+                            </div>
+                                <button class="w3-right w3-button w3-gray " onclick="document.getElementById('Time_modal').style.display='block'" style="margin:10px 10px;"  ><i class="fa fa-cog fa-fw"></i></button>
+                        </div>
+                    </div>
+
+                    <!--########### Time Modulater layer #########################-->
+                    <div id="Time_modal" class="w3-modal">
+                        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                            <header class="w3-container w3-black">
+                                  <span onclick="document.getElementById('Time_modal').style.display='none'"class="w3-button w3-large w3-display-topright">&times;</span>
+                                  <h2>Time Modulater</h2>
+                            </header>
+                            <div class="slidecontainer">
+                                  <input type="range" value="0" max="1" step="0.1" min = "0" class="slider" id="shift1">
+                                  <p class ="padd-left_8">Mod 1 : <span id="shift1_text">0</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                  <input type="range" value="0" max="2" step="0.1" min = "0" class="slider" id="shift2">
+                                  <p class ="padd-left_8">Mod 2 :<span id="shift2_text">0</span> </p>
+                            </div>
+
+                            <div class="slidecontainer">
+                                <input type="range" value="0" max="3" step="0.1" min = "0" class="slider" id="shift3">
+                                <p class ="padd-left_8"> Mod 3 : <span id="shift3_text">0</span></p>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" value="0" max="4" step="0.1" min = "0" class="slider" id="shift4">
+                                <p class ="padd-left_8"> Mod 4 : <span id="shift4_text">0</span></p>
+                            </div>
+                            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                              <button onclick="document.getElementById('Time_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                              <select class="w3-select w3-border wid-60 "  id ="time_preset" name="option">
+                                  <option value="" disabled selected> Preset</option>
+                                  <option value="1">Preset 1</option>
+                                  <option value="2">Preset 2</option>
+                                  <option value="3">Preset 3</option>
+                                  <option value="4">Preset 4</option>
+                              </select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!--################## delayr #################################### -->
+                    <div class="fix-size" id="check_delay">
+                        <div class="w3-container w3-black ">
+
+                        <div class="w3-left ">
+                            <webaudio-switch id="delaybypass" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                        </div>
+                        <!-- <div class="w3-left ">
+                            <webaudio-knob id="delay_time" src="cont/img/3dd.png" value="0" min="0" max="1" step="0.01" diameter="60" sprites="100"></webaudio-knob>
+                            <span style="color:white;font-weight:bold;position:relative;left:-10px;">Delay Time</span>
+                        </div>
+                        <div class="w3-left w3-margin-left">
+                            <webaudio-knob id="feed_back" src="cont/img/3dd.png" value="0" min="0" max="1.0" step="0.01" diameter="60" sprites="100"></webaudio-knob>
+                            <span style="color:white;font-weight:bold;position:relative;left:-10px;">Feedback</span>
+                        </div>
+                        <div class="w3-left w3-margin-left">
+                            <webaudio-knob id="reverbtime" src="cont/img/3dd.png" value="0" max="1" step="0.01" diameter="60" sprites="100"></webaudio-knob>
+                            <span style="color:white;font-weight:bold;position:relative;left:-10px;">Reverb Gain</span>
+                      </div> -->
+
+                       <div class="w3-left">
+                           <h4>Delay/Reverb</h4>
+                       </div>
+                      <button class="w3-right w3-button w3-gray " onclick="document.getElementById('delay_modal').style.display='block'" style="margin:10px 10px;"  ><i class="fa fa-cog fa-fw"></i></button>
+
+                    </div>
+                  </div>
+                    <!--########### delay layer ##########################-->
+                    <div id="delay_modal" class="w3-modal">
+
+                      <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                          <header class="w3-container w3-black">
+                            <span onclick="document.getElementById('delay_modal').style.display='none'"
+                            class="w3-button w3-large w3-display-topright">&times;</span>
+                            <h2>delay/reverb </h2>
+                          </header>
+                          <div class="slidecontainer">
+                            <input type="range" min="0" max="1" value="0" step="0.1" class="slider short" id="delay_time">
+                            <p class ="padd-left_8">delay time : <span id="delay_time_text">0</span></p>
+                            <input type="range" min="0" max="1" value="0" step="0.01" class="slider short" id="feed_back">
+                            <p class ="padd-left_8">feedback : <span id="feed_back_text">0</span></p>
+                            <input type="range" min="0" max="1" value="0" step="0.01" class="slider short" id="reverbtime">
+                            <p class ="padd-left_8">reverb : <span id="reverbtime_text">0</span></p>
+                          </div>
+                          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                              <button onclick="document.getElementById('delay_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                              <select class="w3-select w3-border wid-60 "  id ="delay_preset" name="option">
+                                  <option value="" disabled selected> delay Preset</option>
+                                  <option value="1">zero</option>
+                                  <option value="2">space</option>
+                                  <option value="3">vocal</option>
+                                  <option value="4">solo</option>
+                              </select>
+                          </div>
+
+                      </div>
+                  </div>
+
+
+
+                    <!--################# stereo panning ############################# -->
+                    <div class="fix-size" id="check_pan">
+                        <div class="w3-container w3-black ">
+
+                            <div class="w3-left ">
+                                <webaudio-switch id="delaybypass" src="cont/img/blue.png" value="0" height="50" width="50"></webaudio-switch>
+                            </div>
+
+                            <div class="w3-left">
+                               <h4>pan</h4>
+                            </div>
+                            <p class=" w3-left  w3-orange " style="padding:5px;margin:10px 2px 10px 10px;border:1px solid gray;width:60px;height:30px;">
+                               <strong>L : </strong><i id="pan_left"> 0</i>
+                            </p>
+                            <!-- <div class="w3-left w3-margin-left">
+                               <webaudio-knob id="pan_dial" src="cont/img/dde.png" value="0" min="-1" max="1" step="0.1" diameter="70" sprites="30"></webaudio-knob>
+                               <span style="color:white;font-weight:bold;position:relative;left:0px;">Left | Right</span>
+                            </div> -->
+                            <p class=" w3-orange w3-left" style="padding: 5px;margin:10px 2px;border:1px solid gray;width:60px;height:30px;">
+                               <strong>R : </strong><i id="pan_right">0</i>
+                            </p>
+                            <button class="w3-right w3-button w3-gray " onclick="document.getElementById('pan_modal').style.display='block'" style="margin:10px 10px;"  ><i class="fa fa-cog fa-fw"></i></button>
+
+                        </div>
+                    </div>
+                    <!--########### pan layer ##############################-->
+                    <div id="pan_modal" class="w3-modal">
+
+                      <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                          <header class="w3-container w3-black">
+                            <span onclick="document.getElementById('pan_modal').style.display='none'"
+                            class="w3-button w3-large w3-display-topright">&times;</span>
+                            <h2>Pan Control</h2>
+                          </header>
+                          <div class="slidecontainer">
+                            <input type="range" min="-1" max="1" value="0" step="0.01" class="slider" id="pan_dial">
+                             <p class ="padd-left_8">pan : <span ></span> <strong></strong></p>
+                          </div>
+                          <span class=" w3-orange" style="padding:5px;margin:10px 2px 10px 130px;border:1px solid gray;width:80px;height:30px;">
+                              <strong>L : </strong><i id="pan_left_layer"> 0</i>
+                          </span>
+                          <span >Left | Right</span>
+
+                          <span class=" w3-orange " style="padding: 5px;margin:10px 2px;border:1px solid gray;width:80px;height:30px;">
+                              <strong>R : </strong><i id="pan_right_layer">0</i>
+                          </span>
+
+                          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                              <button onclick="document.getElementById('pan_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                              <button type="button"class="w3-button w3-black"
+                              onclick="PanFunc.center()" name="button">center</button>
+                          </div>
+
+                      </div>
+                  </div>
+
+                    <!--############# Input Recorder ####################### -->
+                    <div class="fix-size" id="check_record">
+                        <div class="w3-container w3-brown ">
+                        <div class="w3-bar">
+                              <button class="w3-bar-item w3-button w3-red" style="width:33.3%" onclick="startRecording();">Record</button>
+                              <button class="w3-bar-item w3-button w3-gray" style="width:33.3%" onclick="stopRecording();">Stop</button>
+                              <button class="w3-bar-item w3-button w3-yellow" style="width:33.3%" onclick="document.getElementById('recod_list').style.display='block'">List</button>
+                        </div>
+                    </div>
+                  </div>
+
+
+
+                    <!--################### Main out ################################# -->
+                    <div class="fix-size">
+                        <div class="w3-container w3-black imag-4 ">
+
+                        <!-- <div class="w3-left ">
+                            <webaudio-knob id="delay_time" src="cont/img/3dd.png" value="0" min="0" max="1" step="0.01" diameter="60" sprites="100"></webaudio-knob>
+                            <span style="color:white;font-weight:bold;position:relative;left:-10px;">Delay Time</span>
+                        </div>
+                        <div class="w3-left w3-margin-left">
+                            <webaudio-knob id="feed_back" src="cont/img/3dd.png" value="0" min="0" max="1.0" step="0.01" diameter="60" sprites="100"></webaudio-knob>
+                            <span style="color:white;font-weight:bold;position:relative;left:-10px;">Feedback</span>
+                        </div>
+                        <div class="w3-left w3-margin-left">
+                            <webaudio-knob id="reverbtime" src="cont/img/3dd.png" value="0" max="1" step="0.01" diameter="60" sprites="100"></webaudio-knob>
+                            <span style="color:white;font-weight:bold;position:relative;left:-10px;">Reverb Gain</span>
+                      </div> -->
+
+                       <div class="w3-left mar-left">
+                           <h4 style="margin-left:20px;">Main Gain </h4>
+                       </div>
+                       <span class="w3-left w3-lime" style="padding:1px 10px;margin:10px 8px;border:5px solid gray;">
+                           <strong >vol : </strong><i id="volume_value"> 20 </i> <strong> %</strong>
+                       </span>
+                      <button class="w3-right w3-button w3-gray " onclick="document.getElementById('main-out_modal').style.display='block'" style="margin:10px 10px;"  ><i class="fa fa-cog fa-fw"></i></button>
+                    </div>
+                  </div>
+                    <!--########### Main Out layer ##########################-->
+                    <div id="main-out_modal" class="w3-modal">
+
+                      <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                          <header class="w3-container w3-black">
+                            <span onclick="document.getElementById('main-out_modal').style.display='none'"
+                            class="w3-button w3-large w3-display-topright">&times;</span>
+                            <h2>Mic Control</h2>
+                          </header>
+                          <div class="slidecontainer">
+                             <input type="range" min="0" max="0.9" value="0.2" step="0.01" class="slider" id="mainout_dail">
+                             <p class ="padd-left_8">Value: <span id="volume_value_1">20</span> <strong>%</strong></p>
+                          </div>
+                          <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                              <button onclick="document.getElementById('main-out_modal').style.display='none'" type="button" class="w3-button w3-red">Back</button>
+                          </div>
+
+                      </div>
+                  </div>
+
+                </div>
+            </div>
+
+            <!--///////// Modal ///////////// -->
+
+            <!--////// recordingslist Modal////// -->
+            <div id="recod_list" class="w3-modal">
+                <div class="w3-modal-content w3-animate-top w3-card-4">
+                  <header class="w3-container w3-black">
+                    <span onclick="document.getElementById('recod_list').style.display='none'"
+                    class="w3-button w3-display-topright">&times;</span>
+                    <h3>Record list</h3>
+                  </header>
+                  <div class="w3-container" id="recordingslist">
+
+                  </div>
+                  <footer class="w3-container w3-red">
+                    <p>Record list</p>
+                  </footer>
+                </div>
+          </div>
+
+            <!--///////// piano keyboard /////////  -->
+
+            <div id="myNav" class="overlay">
+            <div class="w3-show-inline-block" style="margin-left:800px;">
+                  <div class="w3-bar">
+                    <button class="w3-button w3-medium w3-teal" id="osc1_keyboard" disabled>Osc1</button>
+                    <button class="w3-button w3-medium  w3-orange" id="osc2_keyboard" >Osc2</button>
+                  </div>
+            </div>
+
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">close</a>
+              <div class="overlay-content">
+                <webaudio-keyboard id="key1" value="0" direction="" max="1000" step="1" keys="80" width="1350" height="150" style="display:inline-block;border:3px; margin:0px;"> </webaudio-keyboard>
+              </div>
+          </div>
+
+
+            <script>
+                // Get the Sidebar
+                var setSidebar = document.getElementById("setSidebar");
+                var effectSidebar = document.getElementById("effectSidebar");
+                var overlayBg = document.getElementById("myOverlay");
+
+                // Toggle between showing and hiding the sidebar, and add overlay effect
+                function set_open() {
+                    if (setSidebar.style.display === 'block') {
+                        setSidebar.style.display = 'none';
+                        overlayBg.style.display = "none";
+                    } else {
+                        setSidebar.style.display = 'block';
+                        overlayBg.style.display = "block";
+                    }
+                }
+
+                // Close the sidebar with the close button
+                function set_close() {
+                    setSidebar.style.display = "none";
+                    overlayBg.style.display = "none";
+                }
+
+                function effect_open() {
+                    if (effectSidebar.style.display === 'block') {
+                        effectSidebar.style.display = 'none';
+                        overlayBg.style.display = "none";
+                    } else {
+                        effectSidebar.style.display = 'block';
+                        overlayBg.style.display = "block";
+                    }
+                }
+
+                // Close the sidebar with the close button
+                function effect_close() {
+                    effectSidebar.style.display = "none";
+                    overlayBg.style.display = "none";
+                }
+            </script>
+
+            <!--  dr.sax.js library for saxophone -->
+            <script src="./src/vender/drsax.1.7.1.2.0.5.js"></script>
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+
+                var DSX = new DSX;
+                var socket = io();
+
+            </script>
+
+            <!-- init engine  -->
+
+            <script src="./src/js/front/Dr.Init.js"></script>
+            <script src="./src/js/front/Dr.Ajax.js"></script>
+            <script src="./src/js/front/Dr.Framework.js"></script>
+
+
+
+            <!-- markup component -->
+
+            <script src="./src/js/markup/MicInput.js"></script>
+            <script src="./src/js/markup/Markup.Init.js"></script>
+
+
+
+            <!-- js component -->
+            <script src="./src/js/component/OutAmp.js"></script>
+            <!-- <script src="./src/js/component/Osc1.js"></script>
+            <script src="./src/js/component/Osc2.js"></script> -->
+            <script src="./src/js/component/Syn.js"></script>
+            <!-- <script src="./src/js/component/Modulator.js"></script> -->
+            <!-- <script src="./src/js/component/ModulatorSecond.js"></script> -->
+            <script src="./src/js/component/MicInput.js"></script>
+            <script src="./src/js/component/RecordMain.js"></script>
+            <script src="./src/js/component/EQ.js"></script>
+            <script src="./src/js/component/Compressor.js"></script>
+            <script src="./src/js/component/DelayReverb.js"></script>
+            <script src="./src/js/component/Panning.js"></script>
+            <script src="./src/js/component/OutConnect.js"></script>
+            <script src="./src/js/component/FrequencyDomain.js"></script>
+            <script src="./src/js/component/Tuner.js"></script>
+            <script src="./src/js/component/FilePlayer.js"></script>
+            <script src="./src/js/component/PitchShift.js"></script>
+            <!-- <script src="./src/js/component/KeyBoard.js"></script>
+            <script src="./src/js/component/SystemMode.js"></script> -->
+            <script src="./src/js/network/SocketNetwork.js"></script>
+
+        </body>
+    </html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="cont/js/platform.js"></script>
+   <title > node.js _http_arduino network test</title >
+
+</head>
+
+
+<body>
+  <h1> hello arduino_node.js</h1>
+  <div id="button"> button</div>
+    <div id="sensor"> sensor</div>
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+
+
+
+ var socket = io();
+
+
+
+
+
+
+
+
+      socket.on('11', function(str) { // 데이터 받기
+           document.getElementById("button").innerText = str;
+
+               //socket.emit('21', str); // 데이터 보내기
+
+       });
+
+
+
+                      socket.emit('12', "testaaa"); // 데이터 보내기
+
+                      socket.on('12', function(data) { // 데이터 받기
+                           document.getElementById("sensor").innerText = data;
+
+                               //socket.emit('21', str); // 데이터 보내기
+
+                       });
+
+
+
+
+
+
+   </script>
+
+
+
+
+
+</body>
+
+
+</html>
