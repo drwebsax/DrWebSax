@@ -68,11 +68,6 @@ socket.on('eq', function(data) {
     $("#EQ2_2").text(data.eq_2);
 });
 
-
-
-
-
-
 new DSX.functionChange("EQ3", function(e){
 
   var eqData_3 = (e.target.value *1).toFixed(0);
@@ -90,10 +85,6 @@ socket.on('eq', function(data) {
     $("#EQ3").val(data.eq_3);
     $("#EQ3_3").text(data.eq_3);
 });
-
-
-
-
 
 
 new DSX.functionChange("EQ4", function(e){
@@ -209,7 +200,6 @@ $("#eq_preset").change(function(){
         default:
     }
 });
-
 
 
 

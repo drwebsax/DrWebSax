@@ -54,21 +54,15 @@
             saxDelay.feedback = data.feedback;
             saxReverb.gain = data.reverb;
 
-
-
             $("#delay_time").val(data.time);
             $("#feed_back").val(data.feedback);
             $("#reverbtime").val(data.reverb);
-
 
             $("#delay_time_text").text(data.time);
             $("#feed_back_text").text(data.feedback);
             $("#reverbtime_text").text(data.reverb);
 
         });
-
-
-
 
         var bypassDelay = new DSX.functionChange('delaybypass', delaydata);
         function delaydata(e) {

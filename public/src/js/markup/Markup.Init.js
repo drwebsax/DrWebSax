@@ -10,19 +10,18 @@
 	};
 
 	DrWebsax.prototype = {
-			 init : function() {
+		init : function() {
 
-	            var MicInputMarkup = new Dr.MicInputMarkup();
-				$(document).ready(function() {
-					$("#mic_opacity").css('opacity','0.4'); //MIC on/off
-					$("#osc1_opacity").css('opacity','0.4'); //OSC1 on/off
-					$("#osc2_opacity").css('opacity','0.4'); //OSC2 on/off
+            var MicInputMarkup = new Dr.MicInputMarkup();
+			$(document).ready(function() {
+				$("#mic_opacity").css('opacity','0.4'); //MIC on/off
+				$("#osc1_opacity").css('opacity','0.4'); //OSC1 on/off
+				$("#osc2_opacity").css('opacity','0.4'); //OSC2 on/off
 
-
-					$("#opacity_mic").css('opacity','1'); //osc_main_opacity
-					$("#osc_main_opacity").css('opacity','0.4'); //osc_main_opacity
-					$("#osc2_main_opacity").css('opacity','0.4'); //osc2_main_opacity
-				});
+				$("#opacity_mic").css('opacity','1'); //osc_main_opacity
+				$("#osc_main_opacity").css('opacity','0.4'); //osc_main_opacity
+				$("#osc2_main_opacity").css('opacity','0.4'); //osc2_main_opacity
+			});
 	     }
 
 	    ,textSave: function() {

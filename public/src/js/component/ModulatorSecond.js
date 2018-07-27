@@ -8,24 +8,17 @@ new DSX.functionChange('knob_modulator_second', (e)=>{
             //console.log(synTypeData);
             switch (synTypeData) {
               case "OSC":
-
-
-
               break;
               case "FM":
-              console.log("fm");
-
-
+              //console.log("fm");
               break;
               case "AM":
-              console.log("am");
-
+              //console.log("am");
 
               break;
               case "Sub":
               //console.log("sub");
               sub_syn.resonance.value=e.target.value;
-
               break;
 
               default:

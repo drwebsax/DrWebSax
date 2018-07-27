@@ -11,7 +11,7 @@ var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
 var HOST = '127.0.0.1';
 
-/////////////////////////////
+
 
 app.use(express.static(path.join(__dirname,"public"))); // index.html
 

@@ -5,8 +5,6 @@ var recorder;
 var gain_1 = drsax.createGain();
 var gain_2 = drsax.createGain();
 
-
-
 function startRecording() {
     gain8.connect(gain_1);
     gain_2.connect(gain9)
@@ -19,7 +17,6 @@ function stopRecording(button) {
     createDownloadLink();
     recorder.clear();
 }
-
 
 var li;
 var hf;
@@ -45,10 +42,7 @@ function createDownloadLink() {
     });
 };
 
-
-
 function stop(button) {
-
     li.removeChild(li.childNodes[0]);
     hf.removeChild(hf.childNodes[0]);
 }

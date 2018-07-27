@@ -27,32 +27,24 @@ function connectOscFirst(e) {
               sax_canvas_freq.getAnalyser(gainOscFirst); // connect frequency domain
               oscGain.gain.value=0.7;
 
-
               break;
               case "FM":
               //console.log("fm");
 
-
-
               break;
               case "AM":
               //console.log("am");
-
               break;
               case "Sub":
               //console.log("sub");
-
               break;
 
               default:
-                //console.log("osc");
-
-                oscFirst.start();
-                gainOscFirst.connect(oscGain);
-                sax_canvas_freq.getAnalyser(oscGain); // connect frequency domain
-                oscGain.gain.value=0.7;
-
-
+              //console.log("osc");
+              oscFirst.start();
+              gainOscFirst.connect(oscGain);
+              sax_canvas_freq.getAnalyser(oscGain); // connect frequency domain
+              oscGain.gain.value=0.7;
             }
 
 
@@ -73,15 +65,12 @@ function connectOscFirst(e) {
 
             $("#osc1_opacity").css('opacity','0.4'); //OSC1 on/off
             $("#osc1_led_onoff_span").text("OFF");
-
         }
     }else{
-
-
-      saxgain.disconnect(0);
-      oscGain.disconnect(0)
-      $("#osc1_opacity").css('opacity','0.4'); //OSC1 on/off
-      $("#osc1_led_onoff_span").text("OFF");
+        saxgain.disconnect(0);
+        oscGain.disconnect(0)
+        $("#osc1_opacity").css('opacity','0.4'); //OSC1 on/off
+        $("#osc1_led_onoff_span").text("OFF");
     }
 }
 
@@ -95,116 +84,103 @@ new DSX.functionChange('knob_on_off_Osc_1', (e)=>{
             console.log(synTypeData);
             switch (synTypeData) {
               case "OSC":
-              //console.log("osc");
-              oscFirst.frequency.value=e.target.value;
-
+                  //console.log("osc");
+                  oscFirst.frequency.value=e.target.value;
               break;
               case "FM":
-              //console.log("fm");
-              fm.carrier.value=e.target.value;
-
+                  //console.log("fm");
+                  fm.carrier.value=e.target.value;
               break;
               case "AM":
-              //console.log("am");
-              oscFirst.frequency.value=e.target.value;
-
+                  //console.log("am");
+                  oscFirst.frequency.value=e.target.value;
               break;
               case "Sub":
-              //console.log("sub");
-              oscFirst.frequency.value=e.target.value;
-
-
+                  //console.log("sub");
+                  oscFirst.frequency.value=e.target.value;
               break;
 
               default:
-              oscFirst.frequency.value=e.target.value;
+                  oscFirst.frequency.value=e.target.value;
             }
 
             $("#osc1_freq").text((e.target.value).toFixed(0));
             $("#mod1_val").text((e.target.value).toFixed(0));
 
         }
-
     }
-
-
-
 });
 
 
 
-    $("#knob_on_off_Osc_1").mousedown(function(){
+$("#knob_on_off_Osc_1").mousedown(function(){
 
-      if ( OSC1FLAG_ONOFF === true ) {
-          let synTypeData = $("#syn_type").text();
-          switch (synTypeData) {
+  if ( OSC1FLAG_ONOFF === true ) {
+      let synTypeData = $("#syn_type").text();
+      switch (synTypeData) {
+          case "OSC":
+              //console.log("osc");
+              gainOscFirst.gain.value=0.7;
+
+          break;
+          case "FM":
+              //console.log("fm");
+              //oscGain.gain.value=0.7;
+              fm.gain.value=0.7;
+
+          break;
+          case "AM":
+              //console.log("am");
+              amGain.gain.value=0.7;
+
+          break;
+          case "Sub":
+            sub_syn.gain.value=0.7;
+          break;
+          default:
+          gainOscFirst.gain.value=0.7;
+      }
+  }
+});
+
+$("#knob_on_off_Osc_1").mouseup(function(){
+
+    if ( OSC1FLAG_ONOFF === true ) {
+
+        let synTypeData = $("#syn_type").text();
+        switch (synTypeData) {
             case "OSC":
-            //console.log("osc");
-            gainOscFirst.gain.value=0.7;
+                //console.log("osc");
+                gainOscFirst.gain.value=0;
 
             break;
             case "FM":
-            //console.log("fm");
-            //oscGain.gain.value=0.7;
-            fm.gain.value=0.7;
+                //console.log("fm");
+                //oscGain.gain.value=0.7;
+                fm.gain.value=0;
 
             break;
             case "AM":
-            //console.log("am");
-            amGain.gain.value=0.7;
+                //console.log("am");
+                amGain.gain.value=0;
 
             break;
             case "Sub":
-            sub_syn.gain.value=0.7;
+              //console.log("sub");
+              sub_syn.gain.value=0.0;
 
             break;
 
             default:
-            gainOscFirst.gain.value=0.7;
+            gainOscFirst.gain.value=0;
 
-          }
-      }
-
-    });
-
-    $("#knob_on_off_Osc_1").mouseup(function(){
-
-        if ( OSC1FLAG_ONOFF === true ) {
-
-            let synTypeData = $("#syn_type").text();
-            switch (synTypeData) {
-              case "OSC":
-              //console.log("osc");
-              gainOscFirst.gain.value=0;
-
-              break;
-              case "FM":
-              //console.log("fm");
-              //oscGain.gain.value=0.7;
-              fm.gain.value=0;
-
-              break;
-              case "AM":
-              //console.log("am");
-              amGain.gain.value=0;
-
-              break;
-              case "Sub":
-              //console.log("sub");
-              sub_syn.gain.value=0.0;
-
-              break;
-
-              default:
-              gainOscFirst.gain.value=0;
-
-            }
         }
-    });
+    }
+});
 
-    // socket.on('mainOsc1', function(data) {
-    //   console.log(data);
-    //     oscFirst.frequency.value =data.frequency;
-    //     gainOscFirst.gain.value=0.7;
+// socket.on('mainOsc1', function(data) {
+//   console.log(data);
+//     oscFirst.frequency.value =data.frequency;
+//     gainOscFirst.gain.value=0.7;
 
-    //  });
+//  });

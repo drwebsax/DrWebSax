@@ -47,10 +47,6 @@ new DSX.functionChange("mainout_dail", function(e) {
 
  });
 
-
-
-
-
  // component check set
 
 $("#file-check").change(function(e){
@@ -178,14 +174,7 @@ $(document).ready(function() {
     $("#check_delay").hide();
     $("#check_pan").hide();
     $("#check_record").hide();
-
-
-
   });
-
-
-
-
 
 // file-check
 // tunner-check

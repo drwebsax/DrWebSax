@@ -32,15 +32,14 @@ function comp(e) {
 }
 
 new DSX.functionChange("Comp1", function(e){
-  $("#Comp1_text").text(e.target.value);
-
-  socket.emit('comp', {
-      threshold : e.target.value, // saxComp.threshold
-      reduction : saxComp.reduction,
-      knee : saxComp.knee.value,
-      ratio : saxComp.ratio.value,
-      attack : saxComp.attack.value,
-      release : saxComp.release.value,
+    $("#Comp1_text").text(e.target.value);
+    socket.emit('comp', {
+        threshold : e.target.value, // saxComp.threshold
+        reduction : saxComp.reduction,
+        knee : saxComp.knee.value,
+        ratio : saxComp.ratio.value,
+        attack : saxComp.attack.value,
+        release : saxComp.release.value,
   });
 });
 socket.on('comp', function(data) {
@@ -53,16 +52,16 @@ socket.on('comp', function(data) {
 
 
 new DSX.functionChange("Comp2", function(e){
-  $("#Comp2_text").text(e.target.value);
+    $("#Comp2_text").text(e.target.value);
 
-  socket.emit('comp', {
-      threshold :  saxComp.threshold.value,
-      reduction : e.target.value,
-      knee : saxComp.knee.value,
-      ratio : saxComp.ratio.value,
-      attack : saxComp.attack.value,
-      release : saxComp.release.value,
-  });
+    socket.emit('comp', {
+        threshold :  saxComp.threshold.value,
+        reduction : e.target.value,
+        knee : saxComp.knee.value,
+        ratio : saxComp.ratio.value,
+        attack : saxComp.attack.value,
+        release : saxComp.release.value,
+    });
 });
 socket.on('comp', function(data) {
     saxComp.reduction = data.reduction;
@@ -73,15 +72,15 @@ socket.on('comp', function(data) {
 
 
 new DSX.functionChange("Comp3", function(e){
-  $("#Comp3_text").text(e.target.value);
+    $("#Comp3_text").text(e.target.value);
 
-  socket.emit('comp', {
-      threshold :  saxComp.threshold.value,
-      reduction : saxComp.reduction,
-      knee : e.target.value,
-      ratio : saxComp.ratio.value,
-      attack : saxComp.attack.value,
-      release : saxComp.release.value,
+    socket.emit('comp', {
+        threshold :  saxComp.threshold.value,
+        reduction : saxComp.reduction,
+        knee : e.target.value,
+        ratio : saxComp.ratio.value,
+        attack : saxComp.attack.value,
+        release : saxComp.release.value,
   });
 });
 socket.on('comp', function(data) {
@@ -92,14 +91,14 @@ socket.on('comp', function(data) {
 
 
 new DSX.functionChange("Comp4", function(e){
-  $("#Comp4_text").text(e.target.value);
-  socket.emit('comp', {
-      threshold :  saxComp.threshold.value,
-      reduction : saxComp.reduction,
-      knee : saxComp.knee.value,
-      ratio : e.target.value,
-      attack : saxComp.attack.value,
-      release : saxComp.release.value,
+    $("#Comp4_text").text(e.target.value);
+    socket.emit('comp', {
+        threshold :  saxComp.threshold.value,
+        reduction : saxComp.reduction,
+        knee : saxComp.knee.value,
+        ratio : e.target.value,
+        attack : saxComp.attack.value,
+        release : saxComp.release.value,
   });
 });
 socket.on('comp', function(data) {
@@ -108,20 +107,16 @@ socket.on('comp', function(data) {
     $("#Comp4_text").text(data.ratio);
 });
 
-
-
-
-
 new DSX.functionChange("Comp5", function(e){
-  $("#Comp5_text").text(e.target.value);
-  socket.emit('comp', {
-      threshold :  saxComp.threshold.value,
-      reduction : saxComp.reduction,
-      knee : saxComp.knee.value,
-      ratio : saxComp.ratio.value,
-      attack : e.target.value,
-      release : saxComp.release.value,
-  });
+    $("#Comp5_text").text(e.target.value);
+    socket.emit('comp', {
+        threshold :  saxComp.threshold.value,
+        reduction : saxComp.reduction,
+        knee : saxComp.knee.value,
+        ratio : saxComp.ratio.value,
+        attack : e.target.value,
+        release : saxComp.release.value,
+    });
 });
 socket.on('comp', function(data) {
     saxComp.attack = data.attack;
@@ -133,15 +128,15 @@ socket.on('comp', function(data) {
 
 
 new DSX.functionChange("Comp6", function(e){
-  $("#Comp6_text").text(e.target.value);
-  socket.emit('comp', {
-      threshold : saxComp.threshold.value,
-      reduction : saxComp.reduction,
-      knee : saxComp.knee.value,
-      ratio : saxComp.ratio.value,
-      attack : saxComp.attack.value,
-      release : e.target.value,
-  });
+    $("#Comp6_text").text(e.target.value);
+    socket.emit('comp', {
+        threshold : saxComp.threshold.value,
+        reduction : saxComp.reduction,
+        knee : saxComp.knee.value,
+        ratio : saxComp.ratio.value,
+        attack : saxComp.attack.value,
+        release : e.target.value,
+    });
 });
 socket.on('comp', function(data) {
     saxComp.release = data.release;
@@ -152,8 +147,7 @@ socket.on('comp', function(data) {
 // preset select selectBox
 
 $("#comp_preset").change(function(){
-
-    console.log($(this).val());
+    //console.log($(this).val());
     var dataSelect = $(this).val();
     switch (dataSelect) {
         case "1": //vocal
@@ -207,13 +201,8 @@ $("#comp_preset").change(function(){
                 release : 0.76,
             });
         break;
-
         default:
     }
 });
-
-
-
-
 
 //// Compressor SYSTEM    /////

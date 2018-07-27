@@ -40,34 +40,34 @@ function key(data) {
                 //console.log(synTypeData);
                 switch (synTypeData) {
                   case "OSC":
-                  //console.log("osc1");
-                  gainOscFirst.gain.value = 0.7;
-                  oscFirst.frequency.value= str;
+                      //console.log("osc1");
+                      gainOscFirst.gain.value = 0.7;
+                      oscFirst.frequency.value= str;
 
                   break;
                   case "FM":
-                  //console.log("fm");
-                  fm.gain.value=0.7;
-                  fm.carrier.value=str;
+                      //console.log("fm");
+                      fm.gain.value=0.7;
+                      fm.carrier.value=str;
 
                   break;
                   case "AM":
-                  //console.log("am");
+                      //console.log("am");
 
-                  oscFirst.frequency.value= str;
-                  amGain.gain.value=0.7;
+                      oscFirst.frequency.value= str;
+                      amGain.gain.value=0.7;
 
                   break;
                   case "Sub":
-                  //console.log("sub");
-                  oscFirst.frequency.value= str;
-                  sub_syn.gain.value=0.7;
+                      //console.log("sub");
+                      oscFirst.frequency.value= str;
+                      sub_syn.gain.value=0.7;
 
                   break;
 
                   default:
-                  gainOscFirst.gain.value = 0.7;
-                  oscFirst.frequency.value= str;
+                      gainOscFirst.gain.value = 0.7;
+                      oscFirst.frequency.value= str;
 
                 }
                 $("#osc1_freq").text(str.toFixed(0));
@@ -82,38 +82,35 @@ function key(data) {
                 //console.log(synTypeData);
                 switch (synTypeData) {
                   case "OSC":
-                  //console.log("osc");
-                  gainOscSecond.gain.value = 0.7;
-                  oscSecond.frequency.value= str;
+                      //console.log("osc");
+                      gainOscSecond.gain.value = 0.7;
+                      oscSecond.frequency.value= str;
 
                   break;
                   case "FM":
-                  //console.log("fm");
-                  fm.gain.value=0.7;
-                  fm.carrier.value=str;
+                      //console.log("fm");
+                      fm.gain.value=0.7;
+                      fm.carrier.value=str;
 
                   break;
                   case "AM":
-                  //console.log("am");
-                  am_syn.modfreq.value= str;
-                  amGain.gain.value=0.7;
+                      //console.log("am");
+                      am_syn.modfreq.value= str;
+                      amGain.gain.value=0.7;
 
                   break;
                   case "Sub":
-                  console.log("sub");
+                      console.log("sub");
 
                   break;
 
                   default:
-                  gainOscSecond.gain.value = 0.7;
-                  oscSecond.frequency.value= str;
+                      gainOscSecond.gain.value = 0.7;
+                      oscSecond.frequency.value= str;
 
                 }
-
-
                 $("#osc2_freq").text(str.toFixed(0));
                 $("#mod2_val").text(str.toFixed(0));
-
             }
 
         }

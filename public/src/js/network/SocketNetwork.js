@@ -28,34 +28,28 @@ socket.on('mainOsc1', function(data) {
 
         case 'pitch':
 
-        $("#drwebx_onoff").html("Effect : pitch");
-
-
-        am.modfreq.value  = dataLeft * 200;
-        am.depth = dataTop * 0.1;
-        am.gain = dataRight  * 0.01;
+            $("#drwebx_onoff").html("Effect : pitch");
+            am.modfreq.value  = dataLeft * 200;
+            am.depth = dataTop * 0.1;
+            am.gain = dataRight  * 0.01;
 
             break;
+
         case 'time':
-
-        shiftdelay_one.delayTime = dataTop * 0.1 ;
-        shiftdelay_two.delayTime =  dataLeft * 0.2 ;
-        shiftdelay_tree.delayTime = dataRight * 0.3 ;
-        shiftdelay_four.delayTime =  dataRight * 0.4 ;
-
-
-        $("#drwebx_onoff").html("Effect : time");
+            shiftdelay_one.delayTime = dataTop * 0.1 ;
+            shiftdelay_two.delayTime =  dataLeft * 0.2 ;
+            shiftdelay_tree.delayTime = dataRight * 0.3 ;
+            shiftdelay_four.delayTime =  dataRight * 0.4 ;
+            $("#drwebx_onoff").html("Effect : time");
             break;
-        case 'delay':
 
+        case 'delay':
 
             let delayTime = data.top * 3;
             if ( delayTime < 0.1 ) {
                delayTime = 0.1;
             }
             saxDelay.delayTime = delayTime;
-
-
             let newdata = data.right / 67
             newdata = newdata.toFixed(1);
 
@@ -67,14 +61,10 @@ socket.on('mainOsc1', function(data) {
                 newdata = 0.9;
             }
             saxDelay.feedback = newdata;
-
-
             $("#drwebx_onoff").html("Effect : delay");
 
             break;
 
         default:
-
     }
-
  });
