@@ -5,9 +5,9 @@ Web audio application for interactive
 
 ## Application site
 
-* [Main application](https://newsax.herokuapp.com/) 
+* [Main application](https://newsax.herokuapp.com/)  for mobile better PC
 
-* [Control application](https://newsax.herokuapp.com/cont.html) 
+* [Control application](https://newsax.herokuapp.com/cont.html)   for mobile better PC
 
 
 ## Demo Video
