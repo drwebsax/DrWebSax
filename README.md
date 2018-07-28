@@ -14,7 +14,7 @@ Web audio application for interactive
 
 * [delay effect_PC](https://www.youtube.com/watch?v=dXG3VZChIp8&feature=youtu.be).
 
-* [delay_effect_mobile](hthttps://www.youtube.com/watch?v=GgGJUSmtbAY&feature=youtu.be).
+* [delay_effect_mobile](https://www.youtube.com/watch?v=GgGJUSmtbAY&feature=youtu.be).
 
 * [pitch_time effects_mobile](https://www.youtube.com/watch?v=Nkqa44NcV8Q&feature=youtu.be).
 
