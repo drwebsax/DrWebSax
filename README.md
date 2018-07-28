@@ -1,5 +1,5 @@
 
-# DrWebSax [GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
+# DrWebSax ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Web audio application for interactive
 
